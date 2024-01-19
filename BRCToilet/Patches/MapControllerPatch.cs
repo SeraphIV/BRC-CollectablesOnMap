@@ -23,12 +23,13 @@ public class MapControllerPatch
             color = new Color(0f, 1f, 0f)
         };
 
-        if (Plugin.DisplayToiletRadar.Value)
+        if (Plugin.DisplayCollectableRadar.Value)
         {
+            Plugin.Log.LogDebug("Radar: true");
             var m_StoryObjectivePin = traverse.Field<GameObject>("m_StoryObjectivePin").Value;
             publicToiletPrefab = GameObject.Instantiate(m_StoryObjectivePin);
             publicToiletPrefab.name = "PublicToiletPin";
-
+            
             // Destroy things we don't need
             Object.Destroy(publicToiletPrefab.GetComponent<StoryObjectivePin>());
             Object.Destroy(publicToiletPrefab.transform.Find("OutOfViewVisualization").gameObject);
@@ -45,10 +46,12 @@ public class MapControllerPatch
             particleSystemRenderer.material = publicToiletParticleMaterial;
 
             var particleSystem = inView.GetComponentInChildren<ParticleSystem>();
-            particleSystem.startColor = new Color(0f, 1f, 0f);
+            particleSystem.startColor = new Color(0f, 1f, 0f, 0f);
         }
         else
         {
+
+            Plugin.Log.LogDebug("Radar: false");
             var m_GraffitiPinPrefab = traverse.Field<GameObject>("m_GraffitiPinPrefab").Value;
             publicToiletPrefab = GameObject.Instantiate(m_GraffitiPinPrefab);
             publicToiletPrefab.name = "PublicToiletPin";

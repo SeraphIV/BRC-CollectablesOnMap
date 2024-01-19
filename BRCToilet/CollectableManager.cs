@@ -9,25 +9,25 @@ using UnityEngine;
 
 namespace BRCToilet;
 
-public class ToiletManager
+public class CollectableManager
 {
-    public ToiletManager()
+    public CollectableManager()
     {
         StageManager.OnStagePostInitialization += this.StageInit;
     }
 
     private void StageInit()
     {
-        var publicToilets = GetPublicToilets();
+        var publicToilets = GetCollectables();
 
         Plugin.Log.LogDebug("Found " + publicToilets.Length + " toilets!");
 
         foreach (var toilet in publicToilets) {
-            createToiletPin(toilet);
+            createCollectablePin(toilet);
         }
     }
 
-    private MapPin createToiletPin(PublicToilet toilet)
+    private MapPin createCollectablePin(Collectable toilet)
     {
         var mapController = Mapcontroller.Instance;
         var pin = Traverse.Create(mapController)
@@ -41,8 +41,9 @@ public class ToiletManager
         return pin;
     }
 
-    private PublicToilet[] GetPublicToilets()
+    private Collectable[] GetCollectables()
     {
-        return UnityEngine.Object.FindObjectsOfType<PublicToilet>();
+        
+        return UnityEngine.Object.FindObjectsOfType<Collectable>();
     }
 }

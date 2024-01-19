@@ -9,15 +9,19 @@ using System.Drawing;
 
 namespace BRCToilet
 {
-    [BepInPlugin("gay.faejr.plugin.brctoilet", PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin(MyGUID, PluginName, VersionString)]
     public class Plugin : BaseUnityPlugin
     {
-        public static string PLUGIN_GUID = "gay.faejr.plugin.brctoilet";
+        private const string MyGUID = "com.SeraphIV.CollectablesOnMap";
+
+        private const string PluginName = "CollectablesOnMap";
+        private const string VersionString = "0.0.1";
+
         public static ManualLogSource Log = null!;
 
-        public static string DisplayToiletRadarKey = "Display toilet radar";
+        public static string DisplayCollectableRadarKey = "Display collectable radar";
 
-        public static ConfigEntry<bool> DisplayToiletRadar;
+        public static ConfigEntry<bool> DisplayCollectableRadar;
 
         public static byte[] GetImage(string filename)
         {
@@ -35,12 +39,12 @@ namespace BRCToilet
         {
             Log = Logger;
 
-            DisplayToiletRadar = Config.Bind("General", DisplayToiletRadarKey, true);
+            DisplayCollectableRadar = Config.Bind("General", DisplayCollectableRadarKey, true);
 
             Application.runInBackground = true;
             SetupHarmony();
 
-            new ToiletManager();
+            new CollectableManager();
         }
 
         private void SetupHarmony()

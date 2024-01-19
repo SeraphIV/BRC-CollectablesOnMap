@@ -25,13 +25,18 @@ public class MapPinPatch
     [HarmonyPatch("RefreshMapPin")]
     private static void RefreshMapPin(MapPin __instance)
     {
+
         var traverse = Traverse.Create(__instance);
         var m_pinType = traverse.Field<MapPin.PinType>("m_pinType").Value;
+
 
         if (m_pinType == MapPin.PinType.Pin)
         {
             var m_ObjectiveObject = traverse.Field<GameObject>("m_ObjectiveObject").Value;
-            if (m_ObjectiveObject.GetComponent<PublicToilet>().CanSwap) {
+
+            var component = m_ObjectiveObject.GetComponent<Collectable>();
+
+            if (component != null && component.CanBePickedUp()) {
                 traverse.Method("EnableMapPinGameObject").GetValue();
             } else {
                 traverse.Method("DisableMapPinGameObject").GetValue();
