@@ -1,4 +1,4 @@
-# BRC-CollectiblesOnMap
+# BRC-CollectablesOnMap
 
 WIP || NOT CURRENTLY WORKING
 
